@@ -205,11 +205,30 @@ button {
 
 /* Start cart list card styles */
 .cart-card {
+  position: relative;
+  padding-top: 3rem;
   display: grid;
   grid-template-columns: 25% auto 15%;
   font-size: var(--small-font);
   /* max-height: 120px; */
   align-items: center;
+}
+
+.cart-card__remove {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 44px;
+  height: 44px;
+  margin: 0;
+  padding: 0;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+.cart-card__remove:focus-visible {
+  outline: 3px solid #222;
+  outline-offset: 2px;
 }
 
 .cart-card__image {
