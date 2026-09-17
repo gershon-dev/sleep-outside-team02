@@ -4,14 +4,14 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Sleep Outside | Home</title>
-    <link rel="stylesheet" href="/css/style.css" />
-    <script type="module" src="/js/main.js"></script>
+    <link rel="stylesheet" href="css/style.css" />
+    <script src="js/main.js" type="module" defer></script>
   </head>
 
   <body>
     <header class="divider">
       <div class="logo">
-        <img src="/images/noun_Tent_2517.svg" alt="tent image for logo" />
+        <img src="images/noun_Tent_2517.svg" alt="tent image for logo" />
         <a href="index.html"> Sleep<span class="highlight">Outside</span></a>
       </div>
       <div class="cart">
@@ -39,15 +39,16 @@
         </a>
       </div>
     </header>
+
     <main class="divider">
       <div class="hero">
         <img
-          src="/images/banner-sm.jpg"
+          src="images/banner-sm.jpg"
           srcset="images/banner-sm.jpg 500w, images/banner.jpg"
           alt="image of a high mountain lake"
         />
         <div class="logo logo--square">
-          <img src="/images/noun_Tent_2517.svg" alt="tent image for logo" />
+          <img src="images/noun_Tent_2517.svg" alt="tent image for logo" />
           <div>Sleep<span class="highlight">Outside</span></div>
         </div>
         <div class="mission">
@@ -58,11 +59,30 @@
         </div>
       </div>
 
-      <section class="products">
-        <h2>Top Products</h2>
-        <ul class="product-list"></ul>
+      <!-- PRODUCT CATEGORY SECTION -->
+      <section class="categories">
+        <h2>Shop by Category</h2>
+        <div class="category-grid">
+          <a href="product_listing/index.html?category=tents">
+            <span class="category-icon" role="img" aria-label="Tents">⛺</span>
+            <h3>Tents</h3>
+          </a>
+          <a href="product_listing/index.html?category=backpacks">
+            <span class="category-icon" role="img" aria-label="Backpacks">🎒</span>
+            <h3>Backpacks</h3>
+          </a>
+          <a href="product_listing/index.html?category=sleeping-bags">
+            <span class="category-icon" role="img" aria-label="Sleeping Bags">🛌</span>
+            <h3>Sleeping Bags</h3>
+          </a>
+          <a href="product_listing/index.html?category=hammocks">
+            <span class="category-icon" role="img" aria-label="Hammocks">🪢</span>
+            <h3>Hammocks</h3>
+          </a>
+        </div>
       </section>
     </main>
+
     <footer>
       &copy;2025 ⛺ SleepOutside ⛺ WDD 330 ⛺ BYU-Idaho for BYU-Pathway
       Worldwide Online
