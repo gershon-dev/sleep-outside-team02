@@ -1,42 +1,44 @@
-import { setLocalStorage, getParam } from "./utils.mjs";
+import { getLocalStorage, setLocalStorage } from "./utils.mjs";
 
 export default class ProductDetails {
   constructor(productId, dataSource) {
     this.productId = productId;
-    this.dataSource = dataSource;
     this.product = {};
+    this.dataSource = dataSource;
   }
 
   async init() {
-    // fetch the product details using the id we stored earlier
     this.product = await this.dataSource.findProductById(this.productId);
-
-    // now that we have the product data, render it to the page
     this.renderProductDetails();
-
-    // listen for clicks on the Add to Cart button
     document
-      .getElementById("addToCart")
+      .getElementById("add-to-cart")
       .addEventListener("click", this.addProductToCart.bind(this));
   }
 
-  renderProductDetails() {
-    document.querySelector(".product-detail").innerHTML = `
-        <h3>${this.product.Brand.Name}</h3>
-        <h2 class="divider">${this.product.NameWithoutBrand}</h2>
-        <img class="divider" src="${this.product.Image}" alt="${this.product.NameWithoutBrand}" />
-        <p class="product-card__price">$${this.product.FinalPrice}</p>
-        <p class="product__color">${this.product.Colors[0].ColorName}</p>
-        <p class="product__description">${this.product.DescriptionHtmlSimple}</p>
-        <div class="product-detail__add">
-        <button id="addToCart" data-id="${this.product.Id}">Add to Cart</button>
-        </div>
-    `;
-  }
-
   addProductToCart() {
-    const cartItems = JSON.parse(localStorage.getItem("so-cart")) || [];
+    const cartItems = getLocalStorage("so-cart") || [];
     cartItems.push(this.product);
     setLocalStorage("so-cart", cartItems);
   }
+
+  renderProductDetails() {
+    productDetailsTemplate(this.product);
+  }
+}
+
+function productDetailsTemplate(product) {
+  document.querySelector("h2").textContent =
+    product.Category.charAt(0).toUpperCase() + product.Category.slice(1);
+  document.querySelector("#p-brand").textContent = product.Brand.Name;
+  document.querySelector("#p-name").textContent = product.NameWithoutBrand;
+
+  const productImage = document.querySelector("#p-image");
+  productImage.src = product.Images.PrimaryLarge;
+  productImage.alt = product.NameWithoutBrand;
+
+  document.querySelector("#p-price").textContent = `$${product.FinalPrice}`;
+  document.querySelector("#p-color").textContent = product.Colors[0].ColorName;
+  document.querySelector("#p-description").innerHTML = product.DescriptionHtmlSimple;
+
+  document.querySelector("#add-to-cart").dataset.id = product.Id;
 }
