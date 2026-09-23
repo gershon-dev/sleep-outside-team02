@@ -1,22 +1,42 @@
-import { getLocalStorage, setLocalStorage } from "./utils.mjs";
+import { getLocalStorage, setLocalStorage } from './utils.mjs';
 
 function renderCartContents() {
-  const cartItems = getLocalStorage("so-cart") || [];
+  const cartItems = getLocalStorage('so-cart') || [];
   const htmlItems = cartItems.map((item, index) =>
     cartItemTemplate(item, index),
   );
 
-  document.querySelector(".product-list").innerHTML = htmlItems.join("");
+  document.querySelector('.product-list').innerHTML = htmlItems.join('');
 
-  document.querySelectorAll(".cart-card__remove").forEach((button) => {
-    button.addEventListener("click", removeCartItem);
+  document.querySelectorAll('.cart-card__remove').forEach((button) => {
+    button.addEventListener('click', removeCartItem);
   });
+
+  renderCartTotal(cartItems);
+}
+
+function renderCartTotal(cartItems) {
+  const cartFooter = document.querySelector('.cart-footer');
+  const cartTotal = document.querySelector('.cart-total');
+
+  if (cartItems.length === 0) {
+    cartFooter.classList.add('hide');
+    cartTotal.textContent = '';
+    return;
+  }
+
+  const total = cartItems.reduce(
+    (sum, item) => sum + Number(item.FinalPrice),
+    0,
+  );
+  cartTotal.textContent = `Total: $${total.toFixed(2)}`;
+  cartFooter.classList.remove('hide');
 }
 
 function removeCartItem(event) {
   const button = event.currentTarget;
   const index = Number(button.dataset.index);
-  const cartItems = getLocalStorage("so-cart") || [];
+  const cartItems = getLocalStorage('so-cart') || [];
 
   // The index identifies one entry, even when several entries share an ID.
   if (cartItems[index]?.Id !== button.dataset.id) {
@@ -25,15 +45,15 @@ function removeCartItem(event) {
   }
 
   cartItems.splice(index, 1);
-  setLocalStorage("so-cart", cartItems);
+  setLocalStorage('so-cart', cartItems);
   renderCartContents();
 
-  const remainingButtons = document.querySelectorAll(".cart-card__remove");
+  const remainingButtons = document.querySelectorAll('.cart-card__remove');
   const nextButton =
     remainingButtons[Math.min(index, remainingButtons.length - 1)];
 
   if (nextButton) nextButton.focus();
-  else document.querySelector(".logo a").focus();
+  else document.querySelector('.logo a').focus();
 }
 
 function cartItemTemplate(item, index) {
