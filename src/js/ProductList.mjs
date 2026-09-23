@@ -1,10 +1,10 @@
-import { renderListWithTemplate } from "./utils.mjs";
+import { renderListWithTemplate } from './utils.mjs';
 
 function productCardTemplate(product) {
   return `<li class="product-card">
-    <a href="product_pages/?product=${product.Id}">
+    <a href="/product_pages/?product=${encodeURIComponent(product.Id)}">
       <img
-        src="${product.Image}"
+        src="${product.Images.PrimaryMedium}"
         alt="${product.Name}"
       />
       <h3 class="card__brand">${product.Brand.Name}</h3>
@@ -22,11 +22,28 @@ export default class ProductList {
   }
 
   async init() {
-    const list = await this.dataSource.getData();
+    const list = await this.dataSource.getData(this.category);
     this.renderList(list);
+
+    const title = document.querySelector('.title');
+    if (title)
+      title.textContent = `Top Products: ${formatCategory(this.category)}`;
   }
 
   renderList(list) {
-    renderListWithTemplate(productCardTemplate, this.listElement, list);
+    renderListWithTemplate(
+      productCardTemplate,
+      this.listElement,
+      list,
+      'afterbegin',
+      true,
+    );
   }
+}
+
+function formatCategory(category) {
+  return category
+    .split('-')
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(' ');
 }

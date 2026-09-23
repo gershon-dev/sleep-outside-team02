@@ -2,13 +2,13 @@ import {
   getLocalStorage,
   renderListWithTemplate,
   setLocalStorage,
-} from "./utils.mjs";
+} from './utils.mjs';
 
 function cartItemTemplate(item, index) {
   return `<li class="cart-card divider">
     <button type="button" class="cart-card__remove" data-id="${item.Id}" data-index="${index}" aria-label="Remove item ${index + 1} from cart">&times;</button>
     <a href="#" class="cart-card__image">
-      <img src="${item.Image}" alt="${item.Name}" />
+      <img src="${item.Images?.PrimaryMedium || item.Image}" alt="${item.Name}" />
     </a>
     <a href="#">
       <h2 class="card__name">${item.Name}</h2>
@@ -35,14 +35,14 @@ export default class ShoppingCart {
       cartItemTemplate,
       this.parentElement,
       cartItems,
-      "afterbegin",
+      'afterbegin',
       true,
     );
 
     this.parentElement
-      .querySelectorAll(".cart-card__remove")
+      .querySelectorAll('.cart-card__remove')
       .forEach((button) => {
-        button.addEventListener("click", (event) => this.removeItem(event));
+        button.addEventListener('click', (event) => this.removeItem(event));
       });
   }
 
@@ -60,13 +60,12 @@ export default class ShoppingCart {
     setLocalStorage(this.key, cartItems);
     this.renderCartContents(cartItems);
 
-    const remainingButtons = this.parentElement.querySelectorAll(
-      ".cart-card__remove",
-    );
+    const remainingButtons =
+      this.parentElement.querySelectorAll('.cart-card__remove');
     const nextButton =
       remainingButtons[Math.min(index, remainingButtons.length - 1)];
 
     if (nextButton) nextButton.focus();
-    else document.querySelector(".logo a")?.focus();
+    else document.querySelector('.logo a')?.focus();
   }
 }
