@@ -1,0 +1,17 @@
+const globalVariable = "I'm Global";
+
+function outerFunction() {
+  const outerVariable = "I'm Outer";  
+
+  function innerFunction() {
+    const innerVariable = "I'm Inner";
+    console.log(globalVariable); // I'm Global
+    console.log(outerVariable); // I'm Outer
+    console.log(innerVariable); // I'm Inner
+  }
+
+  innerFunction();
+  console.log(innerVariable); // ReferenceError: innerVariable is not defined
+  console.log(this); // in this scope, refers to the global object (the window in browsers)
+}
+outerFunction();
