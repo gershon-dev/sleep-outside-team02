@@ -86,6 +86,11 @@ export default class CheckoutProcess {
       items: packageItems(this.list),
     };
 
-    return await this.services.checkout(order);
+    try {
+      const response = await this.services.checkout(order);
+      return response;
+    } catch (err) {
+      throw err;
+    }
   }
 }

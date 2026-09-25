@@ -28,8 +28,15 @@ document.forms['checkout'].addEventListener('submit', (event) => {
     })
     .catch((err) => {
       console.error(err);
-      const message =
-        err?.message?.message || err?.message || 'Something went wrong with your order. Please try again.';
+
+      let message = 'Something went wrong with your order. Please try again.';
+
+      if (err?.message && typeof err.message === 'object') {
+        message = Object.values(err.message).join(' ');
+      } else if (typeof err?.message === 'string') {
+        message = err.message;
+      }
+
       alertMessage(message);
     });
 });
