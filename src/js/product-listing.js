@@ -1,4 +1,4 @@
-import ProductData from './ProductData.mjs';
+import ExternalServices from './Externalservices.mjs';
 import ProductList from './ProductList.mjs';
 import { getParam, loadHeaderFooter } from './utils.mjs';
 
@@ -9,7 +9,8 @@ const requestedCategory = getParam('category');
 const category = validCategories.includes(requestedCategory)
   ? requestedCategory
   : 'tents';
-const dataSource = new ProductData();
+
+const dataSource = new ExternalServices();
 const listElement = document.querySelector('.product-list');
 const statusElement = document.querySelector('.product-list-status');
 const productList = new ProductList(category, dataSource, listElement);
@@ -17,11 +18,15 @@ const productList = new ProductList(category, dataSource, listElement);
 async function initProductList() {
   try {
     await productList.init();
-    statusElement.textContent = '';
+    if (statusElement) {
+      statusElement.textContent = '';
+    }
   } catch (error) {
-    statusElement.textContent =
-      'Products could not be loaded. Please try again later.';
-    statusElement.title = error.message;
+    if (statusElement) {
+      statusElement.textContent =
+        'Products could not be loaded. Please try again later.';
+      statusElement.title = error.message;
+    }
   }
 }
 
