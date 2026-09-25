@@ -31,6 +31,21 @@ export default class ShoppingCart {
   }
 
   renderCartContents(cartItems) {
+    // Show/hide footer and calculate total
+    const footerElement = document.querySelector('.cart-footer');
+    if (footerElement) {
+      if (cartItems.length > 0) {
+        footerElement.classList.remove('hide');
+        const total = cartItems.reduce((sum, item) => sum + item.FinalPrice, 0);
+        const totalElement = document.querySelector('.cart-total');
+        if (totalElement) {
+          totalElement.innerText = `Total: $${total.toFixed(2)}`;
+        }
+      } else {
+        footerElement.classList.add('hide');
+      }
+    }
+
     renderListWithTemplate(
       cartItemTemplate,
       this.parentElement,
