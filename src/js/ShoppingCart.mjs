@@ -23,9 +23,18 @@ export default class ShoppingCart {
   init() {
     const cartItems = JSON.parse(localStorage.getItem(this.key)) || [];
     this.renderCartContents(cartItems);
+    this.calculateTotal(cartItems);
   }
 
   renderCartContents(cartItems) {
     renderListWithTemplate(cartItemTemplate, this.parentElement, cartItems, "afterbegin", true);
+  }
+
+  calculateTotal(cartItems) {
+    const total = cartItems.reduce(
+      (sum, item) => sum + item.FinalPrice * (item.Quantity || 1),
+      0
+    );
+    document.querySelector("#cart-total").textContent = `$${total.toFixed(2)}`;
   }
 }
