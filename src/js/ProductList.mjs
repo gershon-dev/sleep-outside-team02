@@ -19,11 +19,13 @@ export default class ProductList {
     this.category = category;
     this.dataSource = dataSource;
     this.listElement = listElement;
+    this.list = [];
   }
 
   async init() {
     const list = await this.dataSource.getData(this.category);
-    this.renderList(list);
+    this.list = list;
+    this.renderList(this.list);
 
     const title = document.querySelector('.title');
     if (title)
@@ -38,6 +40,15 @@ export default class ProductList {
       'afterbegin',
       true,
     );
+  }
+
+  sortList(sortBy) {
+    if (sortBy === 'name') {
+      this.list.sort((a, b) => a.Name.localeCompare(b.Name));
+    } else if (sortBy === 'price') {
+      this.list.sort((a, b) => a.FinalPrice - b.FinalPrice);
+    }
+    this.renderList(this.list);
   }
 }
 

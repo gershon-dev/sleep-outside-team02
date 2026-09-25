@@ -31,3 +31,8 @@ async function initProductList() {
 }
 
 initProductList();
+
+// Event listener for sorting products
+document.getElementById('sortBy')?.addEventListener('change', (e) => {
+  productList.sortList(e.target.value);
+});

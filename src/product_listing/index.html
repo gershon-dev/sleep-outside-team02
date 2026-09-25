@@ -12,6 +12,13 @@
     <main class="divider">
       <section class="products">
         <h1 class="title">Top Products</h1>
+        <div class="sort-container">
+          <label for="sortBy">Sort by: </label>
+          <select id="sortBy">
+            <option value="name">Name (A-Z)</option>
+            <option value="price">Price (Low to High)</option>
+          </select>
+        </div>
         <p class="product-list-status" role="status">Loading products…</p>
         <ul class="product-list"></ul>
       </section>
