@@ -31,19 +31,19 @@
           <input type="text" id="state" name="state" required />
 
           <label for="zip">Zip Code</label>
-          <input type="text" id="zip" name="zip" required />
+          <input type="text" id="zip" name="zip" required pattern="[0-9]{5}" />
         </fieldset>
 
         <fieldset>
           <legend>Payment</legend>
           <label for="cardNumber">Card Number</label>
-          <input type="text" id="cardNumber" name="cardNumber" required />
+          <input type="text" id="cardNumber" name="cardNumber" required pattern="[0-9]{16}" />
 
           <label for="expiration">Expiration Date (MM/YY)</label>
-          <input type="text" id="expiration" name="expiration" required />
+          <input type="text" id="expiration" name="expiration" required pattern="(0[1-9]|1[0-2])\/[0-9]{2}" />
 
           <label for="code">Security Code (CVV)</label>
-          <input type="text" id="code" name="code" required />
+          <input type="text" id="code" name="code" required pattern="[0-9]{3}" />
         </fieldset>
 
         <fieldset class="checkout-summary">
